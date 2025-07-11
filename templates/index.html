@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rice Leaf Disease Identifier</title>
+    <link rel="stylesheet" href="/static/style.css" />
+    <script src="/static/server.js"></script>
+  </head>
+  <body>
+    <video muted playsinline id="bg-video">
+      <source
+        src="https://videos.pexels.com/video-files/9336198/9336198-uhd_2560_1440_30fps.mp4"
+        type="video/mp4"
+      />
+      Trình duyệt không hỗ trợ video nền.
+    </video>
+    <div class="container flex">
+      <h1 id="heading">Rice Leaf Disease Identifier</h1>
+      <form
+        class="flex"
+        action="/predict"
+        method="post"
+        enctype="multipart/form-data"
+      >
+        <input id="imageInput" type="file" name="file" accept="image/*" />
+        {% if preview %}
+          <img class="preview-img" src="data:image/png;base64,{{ preview }}" alt="Preview" width="224" height="224">
+        {% else %}
+          <img class="preview-img" src="#" id="imagePreview" alt="Image Preview" style="display:none;">
+        {% endif %}
+        <div class="btn">
+          <button id="submit" type="submit" value="Predict">Predict</button>
+          <button type="reset" onclick="resetButton()">Reset</button>
+        </div>
+      </form>
+      {% if result %}
+        <div class="result-box">
+          <h2 id="result">Predicted class: {{ result.class }}</h2>
+        </div>
+      {% endif %}
+    </div>
+    <script src="/static/reset.js"></script>
+  </body>
+</html>
